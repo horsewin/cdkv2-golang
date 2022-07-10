@@ -17,3 +17,12 @@
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+# IDEs
+.idea
+
+# Executable
+cdkv2-golang
+
+# Others
+cdk.context.json
