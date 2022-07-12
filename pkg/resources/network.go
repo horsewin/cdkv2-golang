@@ -28,15 +28,9 @@ func NewUmaNetworkStack(scope constructs.Construct, id string, props *UmaNetwork
 	}
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
-	// props check
-	var cidrProps string
-	if props.CidrRange != "" {
-		cidrProps = props.CidrRange
-	}
-
 	// VPC
 	vpc := awsec2.NewVpc(stack, jsii.String("Vpc"), &awsec2.VpcProps{
-		Cidr:              jsii.String(cidrProps),
+		Cidr:              props.CidrRange,
 		VpcName:           props.VpcName,
 		NatGateways:       jsii.Number(1),
 		AvailabilityZones: props.AvailabilityZones,

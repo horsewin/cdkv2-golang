@@ -18,12 +18,12 @@ func main() {
 	}
 
 	network := resources.NewUmaNetworkStack(app, "Network", &resources.UmaNetworkStackProps{
-		StackProps:        sprops,
-		VpcName:           jsii.String("uma-vpc"),
-		AvailabilityZones: jsii.Strings("ap-northeast-1c", "ap-northeast-1d"),
+		StackProps: sprops,
+		//VpcName:           jsii.String("uma-vpc"),
+		//AvailabilityZones: jsii.Strings("ap-northeast-1c", "ap-northeast-1d"),
 	})
 
-	resources.NewUmaApplicationStack(app, "Application", &resources.UmaAppliationStackProps{
+	resources.NewUmaApplicationStack(app, "Application", &resources.UmaApplicationStackProps{
 		StackProps: sprops,
 		AppName:    jsii.String("uma-app"),
 		Vpc:        &network.Vpc,
