@@ -10,10 +10,17 @@ import (
 type UmaNetworkStackProps struct {
 	awscdk.StackProps
 	// Golangでは外に公開するモジュールはPascal-caseである必要がある
-	Name *string
+	VpcName           *string
+	CidrRange         *string
+	AvailabilityZones *[]*string
 }
 
-func NewUmaNetworkStack(scope constructs.Construct, id string, props *UmaNetworkStackProps) awscdk.Stack {
+type UmaNetworkStackResponse struct {
+	Stack awscdk.Stack
+	Vpc   awsec2.IVpc
+}
+
+func NewUmaNetworkStack(scope constructs.Construct, id string, props *UmaNetworkStackProps) *UmaNetworkStackResponse {
 	// boilerplate
 	var sprops awscdk.StackProps
 	if props != nil {
@@ -21,13 +28,22 @@ func NewUmaNetworkStack(scope constructs.Construct, id string, props *UmaNetwork
 	}
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
+	// props check
+	var cidrProps string
+	if props.CidrRange != "" {
+		cidrProps = props.CidrRange
+	}
+
 	// VPC
-	awsec2.NewVpc(stack, jsii.String("Vpc"), &awsec2.VpcProps{
-		Cidr:        jsii.String("10.10.0.0/16"),
-		VpcName:     props.Name,
-		NatGateways: jsii.Number(1),
-		MaxAzs:      jsii.Number(2),
+	vpc := awsec2.NewVpc(stack, jsii.String("Vpc"), &awsec2.VpcProps{
+		Cidr:              jsii.String(cidrProps),
+		VpcName:           props.VpcName,
+		NatGateways:       jsii.Number(1),
+		AvailabilityZones: props.AvailabilityZones,
 	})
 
-	return stack
+	return &UmaNetworkStackResponse{
+		Stack: stack,
+		Vpc:   vpc,
+	}
 }

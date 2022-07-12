@@ -1,6 +1,7 @@
-package main
+package testdata
 
 import (
+	"cdkv2-golang"
 	"github.com/aws/aws-cdk-go/awscdk/v2"
 	assertions "github.com/aws/aws-cdk-go/awscdk/v2/assertions"
 	"github.com/aws/jsii-runtime-go"
@@ -12,7 +13,7 @@ func TestCdkv2GolangStack(t *testing.T) {
 	app := awscdk.NewApp(nil)
 
 	// WHEN
-	stack := NewCdkv2GolangStack(app, "MyStack", nil)
+	stack := main.NewCdkv2GolangStack(app, "MyStack", nil)
 
 	// THEN
 	template := assertions.Template_FromStack(stack)
