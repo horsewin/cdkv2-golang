@@ -16,7 +16,7 @@ func main() {
 	// The code that defines your stack goes here
 	resources.NewUmaNetworkStack(app, "Network", &resources.UmaNetworkStackProps{
 		StackProps: sprops,
-		VpcName:    jsii.String("uma-vpc"),
+		VpcName:    jsii.String("uma-cdk2-vpc"),
 		//AvailabilityZones: jsii.Strings("ap-northeast-1c", "ap-northeast-1d"),
 	})
 
