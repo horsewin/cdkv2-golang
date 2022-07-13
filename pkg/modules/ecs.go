@@ -23,13 +23,13 @@ type UmaEcsResponse struct {
 func NewEcsTemplate(scope constructs.Construct, id string, props *UmaEcsProps) *UmaEcsResponse {
 
 	// ECS Cluster
-	cluster := awsecs.NewCluster(scope, jsii.String("FargoECSCluster"), &awsecs.ClusterProps{
+	cluster := awsecs.NewCluster(scope, jsii.String("uma-cdk2-cluster"), &awsecs.ClusterProps{
 		ClusterName: props.ClusterName,
 		Vpc:         *props.Vpc,
 	})
 
 	// Create Task Definition
-	taskDef := awsecs.NewFargateTaskDefinition(scope, jsii.String("FargoTaskDef"),
+	taskDef := awsecs.NewFargateTaskDefinition(scope, jsii.String("uma-cdk2-taskdef"),
 		&awsecs.FargateTaskDefinitionProps{
 			MemoryLimitMiB: jsii.Number(512),
 			Cpu:            jsii.Number(256),
@@ -45,17 +45,17 @@ func NewEcsTemplate(scope constructs.Construct, id string, props *UmaEcsProps) *
 	})
 
 	// Create Fargate Service
-	service := awsecs.NewFargateService(scope, jsii.String("FargoService"), &awsecs.FargateServiceProps{
+	service := awsecs.NewFargateService(scope, jsii.String("uma-cdk2-service"), &awsecs.FargateServiceProps{
 		Cluster:        cluster,
 		TaskDefinition: taskDef,
 	})
 
 	// Create ALB
-	lb := elb.NewApplicationLoadBalancer(scope, jsii.String("LB"), &elb.ApplicationLoadBalancerProps{
+	lb := elb.NewApplicationLoadBalancer(scope, jsii.String("uma-cdk2-lb"), &elb.ApplicationLoadBalancerProps{
 		Vpc:            *props.Vpc,
 		InternetFacing: jsii.Bool(true),
 	})
-	listener := lb.AddListener(jsii.String("PublicListener"), &elb.BaseApplicationListenerProps{
+	listener := lb.AddListener(jsii.String("uma-cdk2-publicListener"), &elb.BaseApplicationListenerProps{
 		Port: jsii.Number(80),
 		Open: jsii.Bool(true),
 	})

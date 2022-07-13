@@ -27,8 +27,8 @@ func NewUmaApplicationStack(scope constructs.Construct, id string, props *UmaApp
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
 	// Create each app
-	modules.NewEcsTemplate(stack, "uma-ecs", &modules.UmaEcsProps{
-		ClusterName: jsii.String("uma-cluster"),
+	modules.NewEcsTemplate(stack, "uma-cdk2-ecs", &modules.UmaEcsProps{
+		ClusterName: jsii.String("uma-cdk2-cluster"),
 		Vpc:         props.Vpc,
 	})
 
